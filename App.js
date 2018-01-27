@@ -9,29 +9,43 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableOpacity
 } from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import actionSheet from './src'
+
+const BUTTONS = [
+  'Option 0',
+  'Option 1',
+  'Option 2',
+  'Delete',
+  'Cancel'
+]
+const DESTRUCTIVE_INDEX = 3
+const CANCEL_INDEX = 4
 
 export default class App extends Component<{}> {
+  _openActionSheet = () => {
+    actionSheet.showActionSheetWithOptions({
+      position: 'top',
+      options: BUTTONS,
+      cancelButtonIndex: CANCEL_INDEX,
+      destructiveButtonIndex: DESTRUCTIVE_INDEX,
+      native: true
+    }, () => {
+
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
+        <TouchableOpacity onPress={this._openActionSheet}>
+          <Text style={styles.welcome}>
+            Open action-sheet
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   }
